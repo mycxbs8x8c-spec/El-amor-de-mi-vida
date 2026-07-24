@@ -351,8 +351,7 @@
 </head>
 <body>
 
-    <audio id="dimple.mp3" src="dimple.mp3" loop></audio>
-    <audio id="dimple.mp3" src="https://ia801503.us.archive.org/15/items/bts-dimple/BTS%20-%20Dimple.mp3" loop></audio>
+    <audio id="dimple-audio" src="dimple.mp3" loop></audio>
     <div class="paper-container">
 
         <!-- Barra Superior / Reproductor -->
@@ -511,68 +510,71 @@
         </div>
 
     </div>
- 
-   <script>
-    const cartaUniverso = document.getElementById('cartaUniverso');
-    const miCarta = document.getElementById('miCarta');
-    const musica = document.getElementById('dimple-audio');
-const btnPlay = document.getElementById('btnPlay');
+ <script>
+        const cartaUniverso = document.getElementById('cartaUniverso');
+        const miCarta = document.getElementById('miCarta');
+        const musica = document.getElementById('dimple-audio');
+        const btnPlay = document.getElementById('btnPlay');
 
-btnPlay.addEventListener('click', () => {
-    if (musica.paused) {
-        musica.play();
-        btnPlay.classList.remove('fa-play');
-        btnPlay.classList.add('fa-pause');
-    } else {
-        musica.pause();
-        btnPlay.classList.remove('fa-pause');
-        btnPlay.classList.add('fa-play');
-    }
-});
+        // Al hacer clic en la carta
+        if (miCarta) {
+            miCarta.addEventListener('click', function() {
+                cartaUniverso.classList.add('abierta');
+                
+                // Reproduce música cuando abre la carta
+                musica.play().then(() => {
+                    btnPlay.classList.remove('fa-play');
+                    btnPlay.classList.add('fa-pause');
+                }).catch(e => {
+                    console.log("Error o bloqueo de audio:", e);
+                });
 
-        setTimeout(() => {
-            cartaUniverso.style.opacity = '0';
-            setTimeout(() => {
-                cartaUniverso.style.display = 'none';
-            }, 500);
-        }, 4000);
-
-    // Contador de tiempo
-    const fechaInicio = new Date("2025-07-25T00:00:00");
-
-    function actualizarContador() {
-        const ahora = new Date();
-        const diferencia = ahora - fechaInicio;
-
-        if (diferencia > 0) {
-            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-            const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
-            const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
-            const segundos = Math.floor((diferencia / 1000) % 60);
-
-            document.getElementById('dias').innerText = dias;
-            document.getElementById('horas').innerText = horas < 10 ? '0' + horas : horas;
-            document.getElementById('minutos').innerText = minutos < 10 ? '0' + minutos : minutos;
-            document.getElementById('segundos').innerText = segundos < 10 ? '0' + segundos : segundos;
+                setTimeout(() => {
+                    cartaUniverso.style.opacity = '0';
+                    setTimeout(() => {
+                        cartaUniverso.style.display = 'none';
+                    }, 500);
+                }, 4000);
+            });
         }
-    }
-    
-    setInterval(actualizarContador, 1000);
-    actualizarContador(); 
 
-    // Control manual con el botón del reproductor
-    btnPlay.addEventListener('click', () => {
-        if (musica.paused) {
-            musica.play();
-            btnPlay.classList.remove('fa-play');
-            btnPlay.classList.add('fa-pause');
-        } else {
-            musica.pause();
-            btnPlay.classList.remove('fa-pause');
-            btnPlay.classList.add('fa-play');
+        // Botón de Play / Pausa manual
+        btnPlay.addEventListener('click', () => {
+            if (musica.paused) {
+                musica.play();
+                btnPlay.classList.remove('fa-play');
+                btnPlay.classList.add('fa-pause');
+            } else {
+                musica.pause();
+                btnPlay.classList.remove('fa-pause');
+                btnPlay.classList.add('fa-play');
+            }
+        });
+
+        // Contador
+        const fechaInicio = new Date("2025-07-25T00:00:00");
+
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+
+            if (diferencia > 0) {
+                const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+                const minutos = Math.floor((diferencia / (1000 * 60)) % 60);
+                const segundos = Math.floor((diferencia / 1000) % 60);
+
+                document.getElementById('dias').innerText = dias;
+                document.getElementById('horas').innerText = horas < 10 ? '0' + horas : horas;
+                document.getElementById('minutos').innerText = minutos < 10 ? '0' + minutos : minutos;
+                document.getElementById('segundos').innerText = segundos < 10 ? '0' + segundos : segundos;
+            }
         }
-    });
-</script>
+        
+        setInterval(actualizarContador, 1000);
+        actualizarContador(); 
+    </script>
+   
 </body>
 </html>
 </html>
