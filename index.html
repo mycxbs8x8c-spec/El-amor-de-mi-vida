@@ -515,19 +515,19 @@
     const cartaUniverso = document.getElementById('cartaUniverso');
     const miCarta = document.getElementById('miCarta');
     const musica = document.getElementById('dimple-audio');
-    const btnPlay = document.getElementById('btnPlay');
+const btnPlay = document.getElementById('btnPlay');
 
-    // Al hacer clic en la carta: abre la carta Y reproduce la música
-    miCarta.addEventListener('click', function() {
-        cartaUniverso.classList.add('abierta');
-        
-        // Reproducir música al abrir la carta
-        musica.play().then(() => {
-            btnPlay.classList.remove('fa-play');
-            btnPlay.classList.add('fa-pause');
-        }).catch(error => {
-            console.log("El navegador bloqueó el audio o no se encontró el archivo:", error);
-        });
+btnPlay.addEventListener('click', () => {
+    if (musica.paused) {
+        musica.play();
+        btnPlay.classList.remove('fa-play');
+        btnPlay.classList.add('fa-pause');
+    } else {
+        musica.pause();
+        btnPlay.classList.remove('fa-pause');
+        btnPlay.classList.add('fa-play');
+    }
+});
 
         setTimeout(() => {
             cartaUniverso.style.opacity = '0';
